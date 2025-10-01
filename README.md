@@ -1,4 +1,4 @@
-# The Network Simulator, Version 3
+# Simulador de Rede, Versão 3 - com Módulo LoRaWAN
 
 [![codecov](https://codecov.io/gh/nsnam/ns-3-dev-git/branch/master/graph/badge.svg)](https://codecov.io/gh/nsnam/ns-3-dev-git/branch/master/)
 [![Gitlab CI](https://gitlab.com/nsnam/ns-3-dev/badges/master/pipeline.svg)](https://gitlab.com/nsnam/ns-3-dev/-/pipelines)
@@ -6,165 +6,250 @@
 
 [![Latest Release](https://gitlab.com/nsnam/ns-3-dev/-/badges/release.svg)](https://gitlab.com/nsnam/ns-3-dev/-/releases)
 
-## License
+## Licença
 
-This software is licensed under the terms of the GNU General Public License v2.0 only (GPL-2.0-only).
-See the LICENSE file for more details.
+Este software é licenciado sob os termos da GNU General Public License v2.0 apenas (GPL-2.0-only).
+Consulte o arquivo LICENSE para mais detalhes.
 
-## Table of Contents
+## Índice
 
-* [Overview](#overview-an-open-source-project)
-* [Software overview](#software-overview)
-* [Getting ns-3](#getting-ns-3)
-* [Building ns-3](#building-ns-3)
-* [Testing ns-3](#testing-ns-3)
-* [Running ns-3](#running-ns-3)
-* [ns-3 Documentation](#ns-3-documentation)
-* [Working with the Development Version of ns-3](#working-with-the-development-version-of-ns-3)
-* [Contributing to ns-3](#contributing-to-ns-3)
-* [Reporting Issues](#reporting-issues)
-* [Asking Questions](#asking-questions)
-* [ns-3 App Store](#ns-3-app-store)
+* [Visão Geral](#visão-geral-um-projeto-open-source)
+* [Visão Geral do Software](#visão-geral-do-software)
+* [Módulo LoRaWAN](#módulo-lorawan)
+* [Obtendo o ns-3](#obtendo-o-ns-3)
+* [Compilando o ns-3](#compilando-o-ns-3)
+* [Testando o ns-3](#testando-o-ns-3)
+* [Executando o ns-3](#executando-o-ns-3)
+* [Executando Exemplos LoRaWAN](#executando-exemplos-lorawan)
+* [Documentação do ns-3](#documentação-do-ns-3)
+* [Trabalhando com a Versão de Desenvolvimento do ns-3](#trabalhando-com-a-versão-de-desenvolvimento-do-ns-3)
+* [Contribuindo para o ns-3](#contribuindo-para-o-ns-3)
+* [Relatando Problemas](#relatando-problemas)
+* [Fazendo Perguntas](#fazendo-perguntas)
+* [Loja de Aplicativos ns-3](#loja-de-aplicativos-ns-3)
 
-> **NOTE**: Much more substantial information about ns-3 can be found at
+> **NOTA**: Informações muito mais detalhadas sobre o ns-3 podem ser encontradas em
 <https://www.nsnam.org>
 
-## Overview: An Open Source Project
+## Visão Geral: Um Projeto Open Source
 
-ns-3 is a free open source project aiming to build a discrete-event
-network simulator targeted for simulation research and education.
-This is a collaborative project; we hope that
-the missing pieces of the models we have not yet implemented
-will be contributed by the community in an open collaboration
-process. If you would like to contribute to ns-3, please check
-the [Contributing to ns-3](#contributing-to-ns-3) section below.
+O ns-3 é um projeto open source gratuito que visa construir um simulador de rede
+de eventos discretos direcionado para pesquisa em simulação e educação.
+Este é um projeto colaborativo; esperamos que
+as peças que faltam dos modelos que ainda não implementamos
+sejam contribuídas pela comunidade em um processo de colaboração aberto.
+Se você gostaria de contribuir para o ns-3, verifique a seção
+[Contribuindo para o ns-3](#contribuindo-para-o-ns-3) abaixo.
 
-This README excerpts some details from a more extensive
-tutorial that is maintained at:
+Este README extrai alguns detalhes de um tutorial mais extenso
+que é mantido em:
 <https://www.nsnam.org/documentation/latest/>
 
-## Software overview
+## Visão Geral do Software
 
-From a software perspective, ns-3 consists of a number of C++
-libraries organized around different topics and technologies.
-Programs that actually run simulations can be written in
-either C++ or Python; the use of Python is enabled by
-[runtime C++/Python bindings](https://cppyy.readthedocs.io/en/latest/).  Simulation programs will
-typically link or import the ns `core` library and any additional
-libraries that they need.  ns-3 requires a modern C++ compiler
-installation (g++ or clang++) and the [CMake](https://cmake.org) build system.
-Most ns-3 programs are single-threaded; there is some limited
-support for parallelization using the [MPI](https://www.nsnam.org/docs/models/html/distributed.html) framework.
-ns-3 can also run in a real-time emulation mode by binding to an
-Ethernet device on the host machine and generating and consuming
-packets on an actual network.  The ns-3 APIs are documented
-using [Doxygen](https://www.doxygen.nl).
+Do ponto de vista do software, o ns-3 consiste em várias bibliotecas C++
+organizadas em torno de diferentes tópicos e tecnologias.
+Programas que realmente executam simulações podem ser escritos
+em C++ ou Python; o uso do Python é habilitado por
+[vinculações C++/Python em tempo de execução](https://cppyy.readthedocs.io/en/latest/). Programas de simulação normalmente
+irão vincular ou importar a biblioteca central `core` do ns e quaisquer bibliotecas
+adicionais que precisarem. O ns-3 requer uma instalação de compilador C++ moderno
+(g++ ou clang++) e o sistema de build [CMake](https://cmake.org).
+A maioria dos programas ns-3 são single-threaded; há algum suporte limitado
+para paralelização usando o framework [MPI](https://www.nsnam.org/docs/models/html/distributed.html).
+O ns-3 também pode executar em um modo de emulação em tempo real, vinculando-se a um
+dispositivo Ethernet na máquina host e gerando e consumindo
+pacotes em uma rede real. As APIs do ns-3 são documentadas
+usando [Doxygen](https://www.doxygen.nl).
 
-The code for the framework and the default models provided
-by ns-3 is built as a set of libraries. The libraries maintained
-by the open source project can be found in the `src` directory.
-Users may extend ns-3 by adding libraries to the build;
-third-party libraries can be found on the [ns-3 App Store](https://www.nsnam.org)
-or elsewhere in public Git repositories, and are usually added to the `contrib` directory.
+O código para o framework e os modelos padrão fornecidos
+pelo ns-3 é construído como um conjunto de bibliotecas. As bibliotecas mantidas
+pelo projeto open source podem ser encontradas no diretório `src`.
+Os usuários podem estender o ns-3 adicionando bibliotecas ao build;
+bibliotecas de terceiros podem ser encontradas na [Loja de Aplicativos ns-3](https://www.nsnam.org)
+ou em outros lugares em repositórios Git públicos, e são geralmente adicionadas ao diretório `contrib`.
 
-## Getting ns-3
+## Módulo LoRaWAN
 
-ns-3 can be obtained by either downloading a released source
-archive, or by cloning the project's
-[Git repository](https://gitlab.com/nsnam/ns-3-dev.git).
+Esta versão do ns-3 inclui um módulo abrangente para simulação de redes **LoRaWAN (Long Range Wide Area Network)**. O LoRaWAN é um protocolo de rede de baixo consumo de energia projetado para dispositivos IoT que precisam transmitir pequenas quantidades de dados em longas distâncias.
 
-Starting with ns-3 release version 3.45, there are two versions
-of source archives that are published with each release:
+### Características do Módulo LoRaWAN
+
+O módulo LoRaWAN fornece:
+
+- **Modelos de PHY realistas**: Implementação da camada física LoRa com diferentes spreading factors, bandwidths e coding rates
+- **Protocolos MAC**: Implementação completa das classes A, B e C de dispositivos LoRaWAN
+- **Componentes de rede**: Dispositivos finais, gateways e servidores de rede
+- **Algoritmos de controle**: Adaptive Data Rate (ADR), controle de potência e seleção de canais
+- **Modelos de energia**: Simulação do consumo de energia dos dispositivos
+- **Modelos de propagação**: Implementação de modelos de perda de caminho específicos para LoRaWAN
+
+### Exemplos Disponíveis
+
+O módulo inclui vários exemplos demonstrativos:
+
+- **`simple-network-example`**: Rede básica com um dispositivo final e um gateway
+- **`complete-network-example`**: Simulação de rede completa com múltiplos dispositivos e gateways
+- **`network-server-example`**: Demonstração do servidor de rede LoRaWAN
+- **`adr-example`**: Exemplo do algoritmo Adaptive Data Rate
+- **`aloha-throughput`**: Análise de throughput com protocolo ALOHA
+- **`frame-counter-update`**: Demonstração da atualização de contadores de frame
+- **`lorawan-energy-model-example`**: Simulação do modelo de energia LoRaWAN
+- **`parallel-reception-example`**: Recepção paralela em gateways
+
+### Documentação LoRaWAN
+
+- **Documentação completa**: Disponível em `LoRaWAN/doc/lorawan.rst`
+- **API Reference**: Documentação detalhada de todas as classes e funções
+- **Parâmetros de simulação**: Guia em `LoRaWAN/doc/parametros-simulacao.md`
+
+Para executar exemplos LoRaWAN, consulte a seção [Executando Exemplos LoRaWAN](#executando-exemplos-lorawan).
+
+## Obtendo o ns-3
+
+O ns-3 pode ser obtido baixando um arquivo de código fonte de uma versão lançada,
+ou clonando o [repositório Git](https://gitlab.com/nsnam/ns-3-dev.git) do projeto.
+
+A partir da versão 3.45 do ns-3, existem duas versões
+de arquivos de código fonte que são publicadas com cada lançamento:
 
 1. ns-3.##.tar.bz2
 1. ns-allinone-3.##.tar.bz2
 
-The first archive is simply a compressed archive of the same code
-that one can obtain by checking out the release tagged code from
-the ns-3-dev Git repository.  The second archive consists of
-ns-3 plus additional contributed modules that are maintained outside
-of the main ns-3 open source project but that have been reviewed
-by maintainers and lightly tested for compatibility with the
-release.  The contributed modules included in the `allinone` release
-will change over time as new third-party libraries emerge while others
-may lose compatibility with the ns-3 mainline (e.g., if they become
-unmaintained).
+O primeiro arquivo é simplesmente um arquivo comprimido do mesmo código
+que se pode obter fazendo checkout do código taggeado da versão
+do repositório Git ns-3-dev. O segundo arquivo consiste no
+ns-3 mais módulos contribuídos adicionais que são mantidos fora
+do projeto principal open source ns-3, mas que foram revisados
+pelos mantenedores e levemente testados para compatibilidade com a
+versão. Os módulos contribuídos incluídos na versão `allinone`
+mudarão ao longo do tempo conforme novas bibliotecas de terceiros emergem enquanto outras
+podem perder compatibilidade com a linha principal do ns-3 (por exemplo, se elas se tornarem
+não mantidas).
 
-## Building ns-3
+## Compilando o ns-3
 
-As mentioned above, ns-3 uses the CMake build system, but
-the project maintains a customized wrapper around CMake
-called the `ns3` tool.  This tool provides a
-[Waf-like](https://waf.io) API
-to the underlying CMake build manager.
-To build the set of default libraries and the example
-programs included in this package, you need to use the
-`ns3` tool. This tool provides a Waf-like API to the
-underlying CMake build manager.
-Detailed information on how to use `ns3` is included in the
-[quick start guide](doc/installation/source/quick-start.rst).
+Como mencionado acima, o ns-3 usa o sistema de build CMake, mas
+o projeto mantém um wrapper customizado em torno do CMake
+chamado ferramenta `ns3`. Esta ferramenta fornece uma
+API [similar ao Waf](https://waf.io)
+para o gerenciador de build CMake subjacente.
+Para compilar o conjunto de bibliotecas padrão e os programas
+de exemplo incluídos neste pacote, você precisa usar a
+ferramenta `ns3`. Esta ferramenta fornece uma API similar ao Waf para o
+gerenciador de build CMake subjacente.
+Informações detalhadas sobre como usar o `ns3` estão incluídas no
+[guia de início rápido](doc/installation/source/quick-start.rst).
 
-Before building ns-3, you must configure it.
-This step allows the configuration of the build options,
-such as whether to enable the examples, tests and more.
+Antes de compilar o ns-3, você deve configurá-lo.
+Este passo permite a configuração das opções de build,
+como habilitar exemplos, testes e mais.
 
-To configure ns-3 with examples and tests enabled,
-run the following command on the ns-3 main directory:
+Para configurar o ns-3 com exemplos e testes habilitados,
+execute o seguinte comando no diretório principal do ns-3:
 
 ```shell
 ./ns3 configure --enable-examples --enable-tests
 ```
 
-Then, build ns-3 by running the following command:
+Em seguida, compile o ns-3 executando o seguinte comando:
 
 ```shell
 ./ns3 build
 ```
 
-By default, the build artifacts will be stored in the `build/` directory.
+Por padrão, os artefatos de build serão armazenados no diretório `build/`.
 
-### Supported Platforms
+### Plataformas Suportadas
 
-The current codebase is expected to build and run on the
-set of platforms listed in the [release notes](RELEASE_NOTES.md)
-file.
+Espera-se que a base de código atual compile e execute no
+conjunto de plataformas listadas no arquivo [notas de lançamento](RELEASE_NOTES.md).
 
-Other platforms may or may not work: we welcome patches to
-improve the portability of the code to these other platforms.
+Outras plataformas podem ou não funcionar: recebemos patches para
+melhorar a portabilidade do código para essas outras plataformas.
 
-## Testing ns-3
+## Testando o ns-3
 
-ns-3 contains test suites to validate the models and detect regressions.
-To run the test suite, run the following command on the ns-3 main directory:
+O ns-3 contém suítes de teste para validar os modelos e detectar regressões.
+Para executar a suíte de testes, execute o seguinte comando no diretório principal do ns-3:
 
 ```shell
 ./test.py
 ```
 
-More information about ns-3 tests is available in the
-[test framework](doc/manual/source/test-framework.rst) section of the manual.
+Mais informações sobre os testes do ns-3 estão disponíveis na
+seção [framework de testes](doc/manual/source/test-framework.rst) do manual.
 
-## Running ns-3
+## Executando o ns-3
 
-On recent Linux systems, once you have built ns-3 (with examples
-enabled), it should be easy to run the sample programs with the
-following command, such as:
+Em sistemas Linux recentes, uma vez que você tenha compilado o ns-3 (com exemplos
+habilitados), deve ser fácil executar os programas de exemplo com o
+seguinte comando, como:
 
 ```shell
 ./ns3 run simple-global-routing
 ```
 
-That program should generate a `simple-global-routing.tr` text
-trace file and a set of `simple-global-routing-xx-xx.pcap` binary
-PCAP trace files, which can be read by `tcpdump -n -tt -r filename.pcap`.
-The program source can be found in the `examples/routing` directory.
+Esse programa deve gerar um arquivo de trace de texto `simple-global-routing.tr`
+e um conjunto de arquivos de trace PCAP binários `simple-global-routing-xx-xx.pcap`,
+que podem ser lidos por `tcpdump -n -tt -r filename.pcap`.
+O código fonte do programa pode ser encontrado no diretório `examples/routing`.
 
-## Running ns-3 from Python
+## Executando Exemplos LoRaWAN
 
-If you do not plan to modify ns-3 upstream modules, you can get
-a pre-built version of the ns-3 python bindings. It is recommended
-to create a python virtual environment to isolate different application
-packages from system-wide packages (installable via the OS package managers).
+Para executar os exemplos específicos do LoRaWAN, use os seguintes comandos:
+
+### Exemplo Básico de Rede LoRaWAN
+```shell
+./ns3 run simple-network-example
+```
+
+### Exemplo Completo de Rede LoRaWAN
+```shell
+./ns3 run complete-network-example
+```
+
+### Exemplo com Servidor de Rede
+```shell
+./ns3 run network-server-example
+```
+
+### Exemplo de Adaptive Data Rate (ADR)
+```shell
+./ns3 run adr-example
+```
+
+### Análise de Throughput ALOHA
+```shell
+./ns3 run aloha-throughput
+```
+
+### Exemplo de Modelo de Energia LoRaWAN
+```shell
+./ns3 run lorawan-energy-model-example
+```
+
+### Exemplo de Recepção Paralela
+```shell
+./ns3 run parallel-reception-example
+```
+
+Para ver opções adicionais de qualquer exemplo, use:
+```shell
+./ns3 run <exemplo> -- --help
+```
+
+Por exemplo:
+```shell
+./ns3 run simple-network-example -- --help
+```
+
+## Executando o ns-3 a partir do Python
+
+Se você não planeja modificar os módulos upstream do ns-3, pode obter
+uma versão pré-compilada das vinculações Python do ns-3. É recomendado
+criar um ambiente virtual Python para isolar diferentes pacotes de aplicação
+dos pacotes do sistema (instaláveis via gerenciadores de pacotes do SO).
 
 ```shell
 python3 -m venv ns3env
@@ -172,11 +257,11 @@ source ./ns3env/bin/activate
 pip install ns3
 ```
 
-If you do not have `pip`, check their documents
-on [how to install it](https://pip.pypa.io/en/stable/installation/).
+Se você não tem o `pip`, consulte os documentos
+sobre [como instalá-lo](https://pip.pypa.io/en/stable/installation/).
 
-After installing the `ns3` package, you can then create your simulation python script.
-Below is a trivial demo script to get you started.
+Após instalar o pacote `ns3`, você pode então criar seu script de simulação Python.
+Abaixo está um script de demonstração trivial para começar.
 
 ```python
 from ns import ns
@@ -188,96 +273,132 @@ ns.Simulator.Run()
 ns.Simulator.Destroy()
 ```
 
-The simulation will take a while to start, while the bindings are loaded.
-The script above will print the logging messages for the called commands.
+A simulação levará um tempo para iniciar, enquanto as vinculações são carregadas.
+O script acima imprimirá as mensagens de log para os comandos chamados.
 
-Use `help(ns)` to check the prototypes for all functions defined in the
-ns3 namespace. To get more useful results, query specific classes of
-interest and their functions e.g., `help(ns.Simulator)`.
+Use `help(ns)` para verificar os protótipos para todas as funções definidas no
+namespace ns3. Para obter resultados mais úteis, consulte classes específicas de
+interesse e suas funções, por exemplo, `help(ns.Simulator)`.
 
-Smart pointers `Ptr<>` can be differentiated from objects by checking if
-`__deref__` is listed in `dir(variable)`. To dereference the pointer,
+Ponteiros inteligentes `Ptr<>` podem ser diferenciados de objetos verificando se
+`__deref__` está listado em `dir(variable)`. Para desreferenciar o ponteiro,
 use `variable.__deref__()`.
 
-Most ns-3 simulations are written in C++ and the documentation is
-oriented towards C++ users. The ns-3 tutorial programs (`first.cc`,
-`second.cc`, etc.) have Python equivalents, if you are looking for
-some initial guidance on how to use the Python API. The Python
-API may not be as full-featured as the C++ API, and an API guide
-for what C++ APIs are supported or not from Python do not currently exist.
-The project is looking for additional Python maintainers to improve
-the support for future Python users.
+A maioria das simulações ns-3 são escritas em C++ e a documentação é
+orientada para usuários C++. Os programas tutoriais do ns-3 (`first.cc`,
+`second.cc`, etc.) têm equivalentes em Python, se você está procurando
+alguma orientação inicial sobre como usar a API Python. A
+API Python pode não ser tão completa quanto a API C++, e um guia de API
+para quais APIs C++ são suportadas ou não no Python atualmente não existem.
+O projeto está procurando mantenedores Python adicionais para melhorar
+o suporte para futuros usuários Python.
 
-## ns-3 Documentation
+## Documentação do ns-3
 
-Once you have verified that your build of ns-3 works by running
-the `simple-global-routing` example as outlined in the [running ns-3](#running-ns-3)
-section, it is quite likely that you will want to get started on reading
-some ns-3 documentation.
+Uma vez que você tenha verificado que sua compilação do ns-3 funciona executando
+o exemplo `simple-global-routing` conforme descrito na seção [executando o ns-3](#executando-o-ns-3),
+é bem provável que você queira começar a ler
+alguma documentação do ns-3.
 
-All of that documentation should always be available from
-the ns-3 website: <https://www.nsnam.org/documentation/>.
+Toda essa documentação deve estar sempre disponível no
+site do ns-3: <https://www.nsnam.org/documentation/>.
 
-This documentation includes:
+Esta documentação inclui:
 
-* a tutorial
-* a reference manual
-* models in the ns-3 model library
-* a wiki for user-contributed tips: <https://www.nsnam.org/wiki/>
-* API documentation generated using doxygen: this is
-  a reference manual, most likely not very well suited
-  as introductory text:
+* um tutorial
+* um manual de referência
+* modelos na biblioteca de modelos ns-3
+* um wiki para dicas contribuídas pelos usuários: <https://www.nsnam.org/wiki/>
+* documentação da API gerada usando doxygen: este é
+  um manual de referência, provavelmente não muito adequado
+  como texto introdutório:
   <https://www.nsnam.org/doxygen/index.html>
 
-## Working with the Development Version of ns-3
+### Documentação Específica do LoRaWAN
 
-If you want to download and use the development version of ns-3, you
-need to use the tool `git`. A quick and dirty cheat sheet is included
-in the manual, but reading through the Git
-tutorials found in the Internet is usually a good idea if you are not
-familiar with it.
+Para o módulo LoRaWAN, documentação adicional está disponível:
 
-If you have successfully installed Git, you can get
-a copy of the development version with the following command:
+* **Documentação do modelo LoRaWAN**: `LoRaWAN/doc/lorawan.rst`
+* **Parâmetros de simulação**: `LoRaWAN/doc/parametros-simulacao.md`
+* **Exemplos comentados**: Códigos fonte em `LoRaWAN/examples/`
+* **API Reference LoRaWAN**: Documentação detalhada das classes LoRaWAN
+* **Figuras e diagramas**: `LoRaWAN/doc/figures/`
+
+## Trabalhando com a Versão de Desenvolvimento do ns-3
+
+Se você quiser baixar e usar a versão de desenvolvimento do ns-3, você
+precisa usar a ferramenta `git`. Uma folha de referência rápida e simples está incluída
+no manual, mas ler os tutoriais Git
+encontrados na Internet geralmente é uma boa ideia se você não está
+familiarizado com ele.
+
+Se você instalou com sucesso o Git, pode obter
+uma cópia da versão de desenvolvimento com o seguinte comando:
 
 ```shell
 git clone https://gitlab.com/nsnam/ns-3-dev.git
 ```
 
-However, we recommend to follow the GitLab guidelines for starters,
-that includes creating a GitLab account, forking the ns-3-dev project
-under the new account's name, and then cloning the forked repository.
-You can find more information in the [manual](https://www.nsnam.org/docs/manual/html/working-with-git.html).
+No entanto, recomendamos seguir as diretrizes do GitLab para iniciantes,
+que incluem criar uma conta GitLab, fazer fork do projeto ns-3-dev
+sob o nome da nova conta, e então clonar o repositório com fork.
+Você pode encontrar mais informações no [manual](https://www.nsnam.org/docs/manual/html/working-with-git.html).
 
-## Contributing to ns-3
+## Contribuindo para o ns-3
 
-The process of contributing to the ns-3 project varies with
-the people involved, the amount of time they can invest
-and the type of model they want to work on, but the current
-process that the project tries to follow is described in the
-[contributing code](https://www.nsnam.org/developers/contributing-code/)
-website and in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+O processo de contribuição para o projeto ns-3 varia com
+as pessoas envolvidas, a quantidade de tempo que podem investir
+e o tipo de modelo em que querem trabalhar, mas o processo atual
+que o projeto tenta seguir está descrito no
+site [contributing code](https://www.nsnam.org/developers/contributing-code/)
+e no arquivo [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Reporting Issues
+## Relatando Problemas
 
-If you would like to report an issue, you can open a new issue in the
-[GitLab issue tracker](https://gitlab.com/nsnam/ns-3-dev/-/issues).
-Before creating a new issue, please check if the problem that you are facing
-was already reported and contribute to the discussion, if necessary.
+Se você gostaria de relatar um problema, pode abrir uma nova issue no
+[rastreador de issues do GitLab](https://gitlab.com/nsnam/ns-3-dev/-/issues).
+Antes de criar uma nova issue, verifique se o problema que você está enfrentando
+já foi relatado e contribua para a discussão, se necessário.
 
-## Asking Questions
+## Fazendo Perguntas
 
-ns-3 has an official [ns-3-users message board](https://groups.google.com/g/ns-3-users)
-where the community asks questions and share helpful advice.
-Additionally, ns-3 has the [ns-3 Zulip chat](https://ns-3.zulipchat.com/), used to discuss
-development issues and questions among maintainers and the community.
+O ns-3 tem um [fórum oficial ns-3-users](https://groups.google.com/g/ns-3-users)
+onde a comunidade faz perguntas e compartilha conselhos úteis.
+Além disso, o ns-3 tem o [chat Zulip ns-3](https://ns-3.zulipchat.com/), usado para discutir
+questões de desenvolvimento e perguntas entre mantenedores e a comunidade.
 
-Please use the above resources to ask questions about ns-3, rather than creating issues.
+Use os recursos acima para fazer perguntas sobre o ns-3, em vez de criar issues.
 
-## ns-3 App Store
+## Loja de Aplicativos ns-3
 
-The official [ns-3 App Store](https://apps.nsnam.org/) is a centralized directory
-listing third-party modules for ns-3 available on the Internet.
+A [Loja de Aplicativos ns-3](https://apps.nsnam.org/) oficial é um diretório centralizado
+listando módulos de terceiros para ns-3 disponíveis na Internet.
 
-More information on how to submit an ns-3 module to the ns-3 App Store is available
-in the [ns-3 App Store documentation](https://www.nsnam.org/docs/contributing/html/external.html).
+Mais informações sobre como submeter um módulo ns-3 para a Loja de Aplicativos ns-3 estão disponíveis
+na [documentação da Loja de Aplicativos ns-3](https://www.nsnam.org/docs/contributing/html/external.html).
+
+---
+
+## Sobre Esta Versão LoRaWAN
+
+Esta versão do ns-3 foi estendida com um módulo LoRaWAN abrangente para simulação de redes IoT de longo alcance. O módulo foi desenvolvido pela Universidade de Pádua e é mantido como parte do ecossistema ns-3.
+
+### Funcionalidades Principais do LoRaWAN
+
+- **Simulação realista de redes LoRaWAN** com dispositivos finais, gateways e servidores de rede
+- **Implementação completa do protocolo LoRaWAN** incluindo classes A, B e C de dispositivos
+- **Modelos de energia precisos** para análise do consumo de energia dos dispositivos
+- **Algoritmos de otimização** como Adaptive Data Rate (ADR) e controle de potência
+- **Modelos de propagação especializados** para comunicações de longo alcance
+- **Análise de desempenho** com métricas detalhadas de throughput, latência e consumo de energia
+
+### Aplicações Típicas
+
+- Pesquisa em redes IoT de baixo consumo
+- Análise de desempenho de protocolos LoRaWAN
+- Otimização de algoritmos de controle de rede
+- Estudos de capacidade e cobertura
+- Análise de consumo de energia em dispositivos IoT
+- Desenvolvimento de aplicações smart city e agricultura inteligente
+
+Para mais informações sobre LoRaWAN, consulte a [documentação oficial da LoRa Alliance](https://lora-alliance.org/).
