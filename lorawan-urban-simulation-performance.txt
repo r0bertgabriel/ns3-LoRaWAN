@@ -1,0 +1,16 @@
+# Comprehensive Performance Metrics for Urban LoRaWAN Simulation
+# Configuration: 50 devices, 3 gateways, 2000m radius
+Simulation Duration: 1800 seconds
+Number of End Devices: 50
+Number of Gateways: 3
+Coverage Radius: 2000 meters
+Application Period: 300 seconds
+Realistic Channel Model: Yes
+
+--- Performance Metrics ---
+Packets Sent: 0
+Packets Received: 0
+Packets Lost: 0
+Packet Delivery Ratio: 0
+Packet Loss Ratio: 0
+Total MAC Packets: 300.000000 276.000000

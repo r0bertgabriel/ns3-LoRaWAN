@@ -1,0 +1,24 @@
+=== Enhanced LoRaWAN IoT Sensor Simulation Summary ===
+Simulation Parameters:
+  - Sensor Devices: 20
+  - Gateways: 2
+  - Network Radius: 2000 meters
+  - Simulation Duration: 0.5 hours
+  - Sensor Reading Interval: 2 minutes
+  - Environment Type: urban
+  - Expected Packets per Device: 15
+  - Total Expected Packets: 300
+
+Network Performance:
+  - Packet tracking enabled for detailed analysis
+  - Check enhanced-sensor-global-performance.dat for packet statistics
+  - Check enhanced-sensor-device-status.dat for device status
+  - Check enhanced-sensor-phy-performance.dat for gateway performance
+
+Output Files Generated:
+  - enhanced-sensor-device-status.dat: Device status over time
+  - enhanced-sensor-phy-performance.dat: Gateway PHY performance
+  - enhanced-sensor-global-performance.dat: Global network performance
+  - enhanced-sensor-positions.dat: Node positions and types
+  - enhanced-sensor-lorawan.tr: ASCII trace file
+  - enhanced-sensor-simulation-summary.txt: This summary

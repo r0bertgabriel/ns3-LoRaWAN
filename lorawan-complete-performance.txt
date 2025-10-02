@@ -1,0 +1,15 @@
+# Comprehensive Performance Metrics
+Simulation Duration: 10 seconds
+Number of End Devices: 10
+Number of Gateways: 1
+Coverage Radius: 200 meters
+Application Period: 10 seconds
+Realistic Channel Model: No
+
+--- Performance Metrics ---
+Packets Sent: 0
+Packets Received: 0
+Packets Lost: 0
+Packet Delivery Ratio: -nan
+Packet Loss Ratio: -nan
+Total MAC Packets: 10.000000 10.000000

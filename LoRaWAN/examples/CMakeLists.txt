@@ -2,6 +2,7 @@ set(base_examples
     simple-network-example
     network-server-example
     complete-network-example
+    complete-network-enhanced
     adr-example
     lorawan-energy-model-example
     aloha-throughput

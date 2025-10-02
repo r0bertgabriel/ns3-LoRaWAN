@@ -17,6 +17,7 @@ set(source_files
     model/logical-lora-channel.cc
     model/logical-lora-channel-helper.cc
     model/periodic-sender.cc
+    model/sensor-periodic-sender.cc
     model/one-shot-sender.cc
     model/forwarder.cc
     model/lorawan-mac-header.cc
@@ -42,6 +43,7 @@ set(source_files
     helper/lora-phy-helper.cc
     helper/lorawan-mac-helper.cc
     helper/periodic-sender-helper.cc
+    helper/sensor-periodic-sender-helper.cc
     helper/one-shot-sender-helper.cc
     helper/forwarder-helper.cc
     helper/network-server-helper.cc
@@ -67,6 +69,7 @@ set(header_files
     model/logical-lora-channel.h
     model/logical-lora-channel-helper.h
     model/periodic-sender.h
+    model/sensor-periodic-sender.h
     model/one-shot-sender.h
     model/forwarder.h
     model/lorawan-mac-header.h
@@ -92,6 +95,7 @@ set(header_files
     helper/lora-phy-helper.h
     helper/lorawan-mac-helper.h
     helper/periodic-sender-helper.h
+    helper/sensor-periodic-sender-helper.h
     helper/one-shot-sender-helper.h
     helper/forwarder-helper.h
     helper/network-server-helper.h

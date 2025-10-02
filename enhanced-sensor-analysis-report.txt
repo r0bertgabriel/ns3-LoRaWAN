@@ -1,0 +1,40 @@
+=== RELATÓRIO DE ANÁLISE DOS SENSORES IoT LoRaWAN ===
+Gerado em: 2025-10-01 22:29:40
+
+RESUMO DA SIMULAÇÃO:
+- Total de leituras de sensores: 2,400
+- Dispositivos IoT simulados: 100
+- Período de simulação: 24 leituras (2 horas)
+- Intervalo entre leituras: 5 minutos
+- Tipo de ambiente: Urbano
+
+ANÁLISE DOS DADOS DE TEMPERATURA:
+- Temperatura média: 24.99°C
+- Faixa de temperatura: -0.93°C a 50.94°C
+- Desvio padrão: 7.87°C
+- Mediana: 25.06°C
+
+ANÁLISE DOS DADOS DE UMIDADE:
+- Umidade média: 55.15%
+- Faixa de umidade: 0.00% a 100.00%
+- Desvio padrão: 19.82%
+- Mediana: 55.38%
+
+ANÁLISE DO SISTEMA DE ENERGIA:
+- Tensão inicial da bateria: 3.700V
+- Tensão final da bateria: 3.677V
+- Degradação total: 23.0mV
+- Taxa de degradação: 0.958mV por leitura
+
+DISTRIBUIÇÃO ESPACIAL:
+- Sensores posicionados: 20
+- Gateways instalados: 2
+- Raio da rede: 2000 metros
+
+ARQUIVOS GERADOS:
+- enhanced-sensor-analysis.png: Gráficos de análise
+- enhanced-sensor-analysis-report.txt: Este relatório
+- enhanced-sensor-simulation-summary.txt: Resumo da simulação
+- enhanced-sensor-positions.dat: Posições dos dispositivos
+- enhanced-sensor-device-status.dat: Status dos dispositivos
+- enhanced-sensor-global-performance.dat: Performance da rede
